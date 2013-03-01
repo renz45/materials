@@ -4,15 +4,17 @@ presentations.
 
 ## Setting up a build system in sublime text 2.
 
-- `Tools => build system => new build system`
+Unzip the node-webkit.zip file and put the node-webkit app into your Applications folder
+
+`Tools => build system => new build system`
 
 Paste this into the window:
 
 ```json
 {
-    "cmd": ["node-webkit", "${project_path:${folder}}"],
-    "working_dir": "${project_path:${folder}}",
-    "path": "/Applications/node-webkit.app/Contents/MacOS/"
+  "cmd": ["node-webkit", "${project_path:${folder}}"],
+  "working_dir": "${project_path:${folder}}",
+  "path": "/Applications/node-webkit.app/Contents/MacOS/"
 }
 ```
 

@@ -1,6 +1,6 @@
 {
   "name": "nw-demo",
-  "main": "index.html",
+  "main": "app.html",
 
   "window": {
     "frame": false,

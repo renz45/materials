@@ -19,9 +19,11 @@ require './src/vendor/jquery.hotkeys.js'
 ########################## Misc globals ##############################
 setAsGlobal("nwGui", require('nw.gui'))
 setAsGlobal('nwWindow', nwGui.Window.get())
+
+############################## UI ####################################
+require('./src/ui/ui')
+
+######################### Initial settings ###########################
 # toggling this makes the window appear on top but not forced to stay there
 nwWindow.setAlwaysOnTop(true)
 nwWindow.setAlwaysOnTop(false)
-
-############################## UI ####################################
-require './src/ui/ui'

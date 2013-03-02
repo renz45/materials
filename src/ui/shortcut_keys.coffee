@@ -3,4 +3,4 @@ exports.init = ->
     nwWindow.showDevTools()
 
   $('html').on 'keydown.meta_r', (evt)->
-    nwWindow.reload()
+    nwWindow.reloadDev()

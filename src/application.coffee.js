@@ -4,8 +4,8 @@
 require('coffee-script')
 global.window = window
 setAsGlobal("_", require('underscore'))
-# jquery doesn't need to be set to a variable like underscore
-require './src/vendor/jquery-1.9.1.min.js'
+# jquery is loaded in the app.html files so reloading the page works
+# this could be changed if we used the node module after it is updated
 setAsGlobal('$', $)
 setAsGlobal('jQuery', jQuery)
 setAsGlobal('backbone', require('backbone'))

@@ -1,8 +1,11 @@
 <html>
 <head>
 <title>Hello World!</title>
-<script type='text/coffeescript' src="src/shims.coffee"></script>
-<script type='text/coffeescript' src="src/application.coffee"></script>
+<script type='text/javascript' src='src/vendor/jquery-1.9.1.min.js'></script>
+<!-- These coffeescript files need the .js extension so we don't get mimetype errors
+on page reload. Only coffeescript files placed here need the .js -->
+<script type='text/coffeescript' src="src/shims.coffee.js"></script>
+<script type='text/coffeescript' src="src/application.coffee.js"></script>
 <script src="src/vendor/coffee-script.js"></script>
 
 </head>

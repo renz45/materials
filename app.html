@@ -1,14 +1,13 @@
 <html>
 <head>
 <title>Hello World!</title>
-
-<script type='text/coffeescript' src="src/application.js"></script>
+<script type='text/coffeescript' src="src/shims.coffee"></script>
+<script type='text/coffeescript' src="src/application.coffee"></script>
 <script src="src/vendor/coffee-script.js"></script>
 
 </head>
 <body>
 <div style="-webkit-app-region: drag; background-color: #eee; width: 100%">Drag me!</div>
-<button onclick="require('nw.gui').Window.get().showDevTools()">Open dev tools</button>
 <h1>Hello World!!!!!</h1>
 We are using node.js <script>document.write(process.version)</script>
 </body>

@@ -1,10 +1,10 @@
 require('./shortcut_keys').init()
-require('./ui_manifest')
 
-setAsGlobal "UI",
+setAsGlobal 'UI',
   Collections: {}
   Controllers: {}
   Observers: {}
+  Modifiers: {}
   Models: {}
   Views:
     Tools: {}
@@ -12,9 +12,7 @@ setAsGlobal "UI",
     Menu: {}
 
   init: (options) ->
-    @Router = new UI.Router(@settings)
-    _.extend(@, Backbone.Events)
-    @Router.start()
+    $('body').append(UI.stage.render())
 
   triggerAll: (events, data, context) ->
     if typeof(events) == "string"
@@ -26,3 +24,11 @@ setAsGlobal "UI",
 
   log: (message) ->
     console.log(message)
+
+
+Backbone.$ = $
+require('./ui_manifest')
+UI.init()
+
+# temp object
+UI.stage.addChild new UI.Views.Shape

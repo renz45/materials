@@ -8,7 +8,7 @@ setAsGlobal("_", require('underscore'))
 # this could be changed if we used the node module after it is updated
 setAsGlobal('$', $)
 setAsGlobal('jQuery', jQuery)
-setAsGlobal('backbone', require('backbone'))
+setAsGlobal('Backbone', require('backbone'))
 setAsGlobal('Config', require('./package.json'))
 
 

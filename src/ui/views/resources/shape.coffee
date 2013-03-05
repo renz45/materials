@@ -16,7 +16,6 @@ UI.Views.Shape = Backbone.View.extend
       'background-color': @model.get('color')
       'top': @model.get('y')
       'left': @model.get('x')
-
     @el
 
   setDefaultStyles: ->
@@ -31,10 +30,8 @@ UI.Views.Shape = Backbone.View.extend
   position: (options={})->
     if options.x
       @model.set('x', options.x, {silent: true})
-
     if options.y
       @model.set('y', options.y, {silent: true})
-
     @render()
 
   x: (value)->

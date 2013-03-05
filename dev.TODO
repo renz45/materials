@@ -1,0 +1,83 @@
+Base object implementation:
+  General:
+    - Find a better way to add functionality to objects without having to proxy methods, maybe extend?
+    - Always always work with svg or a similar vector type
+  List of Modifiers (these should all be individual apis added to different objects via composition):
+    Try to make these tools have the same arguments as possible, keep it short.
+    It will make it easier to create an elegant way of 'including' these into objects.
+    - Draggable - Api for making an object able to be dragged
+    - Resizable - Api for making objects resizable
+    - Movable - Api for making objects able to be moved (don't forget depth index here)
+    - Rotatable - Api for rotating an object
+    - Recordable - Api for recording actions according to a timer
+    - Clock - Api for creating a clock object used in recording tool actions
+    - Styler - Api for adding styles to an object, this is separate from the recorder
+    - Container - Api for accepting child elements
+    - Containable - Api for being a child element
+    - Selectable - Api for selecting an element
+  List of Tools (these are tools used in recording actions):
+    - DragTool: Records movement of dragging an object
+    - RotationTool: Record rotational movement of an object
+    - TransitionTool: Record a transition of an object
+    - ClickPingTool: Record a click ping, useful for pointing at things being explained
+    - ClickSelectPingTool: Record a click ping, but highlight the entire object instead of a small dot
+List of objects:
+  Composition is to be used for these objects, an elegant way of including the modifiers needs to be found
+  I would rather not use inheritance at all, it keeps the objects cleaner and more flexible if they don't
+  all inherit from say, shape.
+  Shape:
+      - Add a Resizable Modifier (don't forget handles or at least a cursor change)
+      - Add a Styler Modifier (this should take raw css/sass and apply styles, this won't be used by the recorder)
+  Image:
+     - Add raster support
+     - Add vector support(svg)
+  Video:
+    Audio and video might need to be almost the same object at heart.
+    Maybe implement some sort of Playable modifier
+    - Support for webkit video only at the moment
+    - should be able to trigger a progress event
+    - should be able to trigger a play event
+    - should be able to trigger a stop event
+    - should be able to trigger a scrubstart event
+    - should be able to trigger a scrubstop event
+    - should be clock object
+  Audio:
+    Audio and video might need to be almost the same object at heart.
+    Maybe implement some sort of Playable modifier
+    - Support for webkit only video at the moment
+    - should be able to trigger a progress event
+    - should be able to trigger a play event
+    - should be able to trigger a stop event
+    - should be able to trigger a scrubstart event
+    - should be able to trigger a scrubstop event
+    - should be clock object
+  Canvas:
+    - Add basic drawing api
+    - Paint brush
+  Text:
+     - Implement Code Mirror
+     - UI for setting text options? Or is a css input box more then enough? (I lean towards css, so add a styler modifier)
+     - Drag chunks of text from one text box to another
+     - When dragging chunks of text, the text should smoothly snap into place and be smoothed out in the recording
+  Stage:
+  Should more then one stage be allowed? I lean towards no for simplicity sake
+    - Set initial sizes
+Global Objects:
+  Window(application window):
+    - Trigger global resize events so the ui can be adjusted
+  Menu:
+    We should really only need a few basic menus, we want to keep it as simple as possible.
+    - Recording Tools
+    - Object menu (shapes, text box, images, etc)
+Recorder Notes:
+  The recorder isn't responsible for the final output. It creates the json file used within this
+  application. I want to create a separate converted to output the finished css keyframes and animations
+  so that we can always change the way the css and html are created, without having to re-record the
+  base recordings.
+  - Should save a json file of recorded options (this format may change)
+  - Should base it's recording on actual timestamps, think similar to a subtitle file
+  - Should have a built in timer, but be able to be slaved to video or audio time stamps
+HTMLCSS Converter Notes:
+  - Take the JSON file from the recorder and output css animations
+  - All non-canvas animations should be able to be accomplished with css.
+  - Canvas recording will probably need to get converted to some sort of javascript or maybe we include some javascript in the page that can redraw canvas based objects, I'm not sure yet.

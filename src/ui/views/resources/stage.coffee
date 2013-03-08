@@ -23,5 +23,3 @@ UI.Views.Stage = Backbone.View.extend
 
   addChild: (child)->
     @$el.append child.render()
-
-UI.stage = new UI.Views.Stage

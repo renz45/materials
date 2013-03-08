@@ -28,6 +28,8 @@ setAsGlobal 'UI',
 
 Backbone.$ = $
 require('./ui_manifest')
+
+UI.stage = new UI.Views.Stage
 UI.init()
 
 # temp object

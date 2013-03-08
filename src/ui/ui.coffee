@@ -25,6 +25,7 @@ setAsGlobal 'UI',
   log: (message) ->
     console.log(message)
 
+_.extend(UI, Backbone.Events)
 
 Backbone.$ = $
 require('./ui_manifest')
@@ -34,3 +35,4 @@ UI.init()
 
 # temp object
 UI.stage.addChild new UI.Views.Shape
+# UI.stage.addChild new UI.Views.Shape

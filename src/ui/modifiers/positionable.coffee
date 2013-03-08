@@ -1,6 +1,6 @@
 class UI.Modifiers.Positionable
   constructor: (view)->
-    _.bindAll @, 'move', 'x', 'y', 'render', 'setDefaultStyles', 'defineMethodsOnView'
+    _.bindAll @, 'move', 'x', 'y', 'render', 'setDefaultStyles', 'defineMethodsOnView', 'recordInfo'
     @view = view
     @model = @view.model
 
@@ -17,6 +17,10 @@ class UI.Modifiers.Positionable
       'position': 'absolute'
       'top': 0
       'left': 0
+
+  # api for interacting with the recordable modifier
+  recordInfo: ->
+    [{method: 'move', arguments: {x: @x(), y: @y()}}]
 
   defineMethodsOnView: ->
     @view.move = @move

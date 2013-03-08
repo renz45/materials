@@ -2,8 +2,9 @@ UI.Views.Shape = UI.Views.BaseResource.extend
   tagName: 'div'
   className: 'shape'
   modifiers: [
-    UI.Modifiers.Positionable
-    UI.Modifiers.Draggable
+    'Positionable'
+    'Draggable'
+    'Recordable'
   ]
 
   initialize: (options = {})->

@@ -8,6 +8,9 @@ UI.Views.BaseResource = Backbone.View.extend
     @setDefaultModifiers()
 
   setDefaultModifiers: ->
+    @recordableModifiers = []
     _.each @modifiers, (modifier)=>
-      new modifier(@)
+      @[modifier] = new UI.Modifiers[modifier](@)
+      if @[modifier].recordInfo && @[modifier].recordInfo.constructor == Function
+        @recordableModifiers.push({name: modifier, modifier: @[modifier]})
 

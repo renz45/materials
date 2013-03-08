@@ -1,7 +1,24 @@
-class StageController
-  initialize: ->
-    UI.stage.on 'Shape:Drag:Start', @initStopDrag
+class UI.Controllers.StageController
+  constructor: ->
+    _.bindAll @, 'startTimer', 'stopTimer', 'resetTimer', 'updateDisplay', 'playRecording'
+    @timer = new UI.Modifiers.Timer()
+    $('.start').on 'click', @startTimer
+    $('.stop').on 'click', @stopTimer
+    $('.reset').on 'click', @resetTimer
+    $('.play').on 'click', @playRecording
+    @timer.on 'tick', @updateDisplay
 
-  initStopDrag: (dragable)->
-    UI.stage.on 'mouseup', ->
-      dragable.stopDrag()
+  startTimer: (evt)->
+    @timer.start()
+
+  stopTimer: (evt)->
+    @timer.stop()
+
+  resetTimer: (evt)->
+    @timer.reset()
+
+  playRecording: (evt)->
+    UI.trigger('Record:Play')
+
+  updateDisplay: (timeStamp)->
+    $('.timer').text(timeStamp)

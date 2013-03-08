@@ -3,8 +3,9 @@ UI.Views.Stage = Backbone.View.extend
   className: 'stage'
 
   initialize: (options = {})->
-    @model = options.model || new UI.Models.Stage
-    @collection = options.collection || new UI.Collections.StageCollection
+    @model = options.model || new UI.Models.Stage()
+    @collection = options.collection || new UI.Collections.StageCollection()
+    @controller = new UI.Controllers.StageController()
     @setDefaultStyles()
 
     @

@@ -13,6 +13,7 @@ Base object implementation:
   List of Modifiers (these should all be individual apis added to different objects via composition):
     Try to make these tools have the same arguments as possible, keep it short.
     It will make it easier to create an elegant way of 'including' these into objects.
+    - Selectable - Api for selecting objects, would also be used to only record selected objects
     - Draggable - Api for making an object able to be dragged
     - Resizable - Api for making objects resizable
     - Movable - Api for making objects able to be moved (don't forget depth index here)

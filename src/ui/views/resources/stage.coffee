@@ -22,5 +22,5 @@ UI.Views.Stage = Backbone.View.extend
       'position': 'absolute'
       'border': '1px solid #afa'
 
-  addChild: (child)->
-    @$el.append child.render()
+  addChild: (childView)->
+    @$el.append childView.render()

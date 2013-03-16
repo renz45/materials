@@ -1,7 +1,10 @@
 Base object implementation:
   General:
-    - Find a better way to add functionality to objects without having to proxy methods, maybe extend?
     - Always always work with svg or a similar vector type
+    - For now, there is one stage per timer and one timer per stage. So if we were to do nested animations later we would create different elements with additional stages. This simplifies how events work.
+    - The timer object can chance, say if there was a video as the timer object
+    - Timer and record events should be global events
+    - Each object's recordable is responsible for it's own recording
   UI Elements:
     I'm not sure if it's worth creating our own or using pieces from say twitter bootstrap
     - Slider - percentage base, horizontal and vertical options

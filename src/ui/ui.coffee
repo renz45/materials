@@ -35,4 +35,4 @@ UI.init()
 
 # temp object
 UI.stage.addChild new UI.Views.Shape
-# UI.stage.addChild new UI.Views.Shape
+UI.stage.addChild new UI.Views.Shape

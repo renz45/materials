@@ -1,6 +1,6 @@
 class UI.Modifiers.Timer
   constructor: (view)->
-    _.bindAll @, 'start', 'stop', 'tick', 'reset'
+    _.bindAll @, 'start', 'stop', 'tick', 'reset', 'getTime'
     _.extend(@, Backbone.Events)
 
     @view = view
@@ -20,8 +20,11 @@ class UI.Modifiers.Timer
   reset: ->
     @stop
     @totalTime = 0
-    @.trigger('tick', @totalTime)
+    UI.trigger('Timer:Reset', @)
 
   tick: ->
     @totalTime +=1
-    @.trigger('tick', @totalTime)
+    UI.trigger('Timer:Tick', @)
+
+  getTime: ->
+    @totalTime

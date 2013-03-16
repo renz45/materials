@@ -1,24 +1,26 @@
 class UI.Controllers.StageController
   constructor: ->
     _.bindAll @, 'startTimer', 'stopTimer', 'resetTimer', 'updateDisplay', 'playRecording'
-    @timer = new UI.Modifiers.Timer()
+
+    UI.timer = new UI.Modifiers.Timer()
     $('.start').on 'click', @startTimer
     $('.stop').on 'click', @stopTimer
     $('.reset').on 'click', @resetTimer
     $('.play').on 'click', @playRecording
-    @timer.on 'tick', @updateDisplay
+    UI.on 'Timer:Tick', @updateDisplay
 
   startTimer: (evt)->
-    @timer.start()
+    UI.timer.start()
 
   stopTimer: (evt)->
-    @timer.stop()
+    UI.timer.stop()
 
   resetTimer: (evt)->
-    @timer.reset()
+    UI.timer.reset()
+    @updateDisplay(UI.timer)
 
   playRecording: (evt)->
     UI.trigger('Record:Play')
 
-  updateDisplay: (timeStamp)->
-    $('.timer').text(timeStamp)
+  updateDisplay: (timer)->
+    $('.timer').text(timer.getTime())

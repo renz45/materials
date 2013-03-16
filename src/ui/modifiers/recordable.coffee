@@ -3,31 +3,37 @@
 
 class UI.Modifiers.Recordable
   constructor: (view)->
-    _.bindAll @, 'record', 'startRecording', 'stopRecording', 'togglePlay', 'handleTick'
-    UI.on 'Timer:Start', @startRecording
-    UI.on 'Timer:Stop', @stopRecording
-    UI.on 'Record:Play', @togglePlay
+    _.bindAll @, 'record', 'startRecording', 'stopRecording', 'togglePlay', 
+                 'handleTick','handleTimerReset'
+    UI.on('Timer:Start', @startRecording)
+    UI.on('Timer:Stop', @stopRecording)
+    UI.on('Timer:Tick', @handleTick)
+    UI.on('Timer:Reset', @handleTimerReset)
+    UI.on('Record:Play', @togglePlay)
     
     @view = view
     # maybe the timer comes from the start recording event?
     @recording = false
     @recordingData = new UI.Modifiers.Recordable.RecordableData()
     @playing = false
+    @playbackIndexCount = 0
 
-  startRecording: (timer)->
-    @timer = timer
-    @recordingData.timer = timer
-    @timer.on('tick', @handleTick)
+  startRecording: (timer)->  
     @recording = true
+
+  handleTimerReset: (timer)->
+    @playbackIndexCount = 0
+    # play the first tick to reposition the elements on reset
+    @playBackRecording(timer.getTime())
 
   stopRecording: (timer)->
     @recording = false
 
-  handleTick: (timeStamp)->
+  handleTick: (timer)->
     if @playing
-      @playBackRecording(timeStamp)
+      @playBackRecording(timer.getTime())
     else
-      @record(timeStamp)
+      @record(timer.getTime())
 
   record: (timeStamp)->
     _.each @view.recordableModifiers, (modifierObject)=>
@@ -39,27 +45,21 @@ class UI.Modifiers.Recordable
     else
       @playing = true
 
-  # this is sort of a proof of concept, the while loop is really
-  # f-ing slow and the streams are getting crossed somwhere
-  # with more then one object on the screen
-  # also, the stored data needs to be deleted for the selected object or modified
-  # when the timer is reset.
-  playBackRecording: (timeStamp)->
+  # play back the record based on the time stamp, this should catch up to a timestamp
+  # if the object was paused or falls before. It could probably still be better, but at
+  # least we're starting at the last count instead of from the beginning everytime.
+  playBackRecording: (timeStamp, options={})->
     _.each @recordingData.playData(), (dataArray, modifierName)=>
-      count = 0
-      while dataArray[count].time < timeStamp
+      while @playbackIndexCount < dataArray.length && dataArray[@playbackIndexCount].time < timeStamp
         #[{method: 'move', arguments: {x: @x(), y: @y()}}]
-        _.each dataArray[count].data, (obj)=>
+        _.each dataArray[@playbackIndexCount].data, (obj)=>
           @view[obj.method](obj.arguments)
-        count += 1
-        if count >= dataArray.length - 1
-          break
+        @playbackIndexCount += 1
 
 
 # class responsible for storing recorded data
 class UI.Modifiers.Recordable.RecordableData
   constructor: ->
-    @timer = null
     @recordingData = {}
 
   push: (recordingEvent, data, timeStamp)->

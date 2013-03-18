@@ -1,4 +1,8 @@
 Base object implementation:
+  Short Term Goals:
+    - Finish selectable
+    - Only objects selected should be recorded.
+    - Recording history needs to be reset for objects being recorded
   General:
     - Always always work with svg or a similar vector type
     - For now, there is one stage per timer and one timer per stage. So if we were to do nested animations later we would create different elements with additional stages. This simplifies how events work.

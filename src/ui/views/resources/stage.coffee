@@ -1,6 +1,7 @@
 UI.Views.Stage = Backbone.View.extend
   tagName: 'div'
   className: 'stage'
+  children: []
 
   initialize: (options = {})->
     @model = options.model || new UI.Models.Stage()
@@ -23,4 +24,5 @@ UI.Views.Stage = Backbone.View.extend
       'border': '1px solid #afa'
 
   addChild: (childView)->
+    @children.push(childView)
     @$el.append childView.render()

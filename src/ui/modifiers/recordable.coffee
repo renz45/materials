@@ -30,14 +30,19 @@ class UI.Modifiers.Recordable
     @recording = false
 
   handleTick: (timer)->
-    if @playing
+    if @playing || !@view.isSelected()
       @playBackRecording(timer.getTime())
-    else
+    else if @recording
       @record(timer.getTime())
 
   record: (timeStamp)->
-    _.each @view.recordableModifiers, (modifierObject)=>
-      @recordingData.push(modifierObject.name, modifierObject.modifier.recordInfo(), timeStamp)
+    # This knows too much about the view if it's looking for an isSelected method..
+    # Need a better way of detecting selected state
+
+    # don't record anything unless the object is selected
+    if @view.isSelected && @view.isSelected()
+      _.each @view.recordableModifiers, (modifierObject)=>
+        @recordingData.push(modifierObject.name, modifierObject.modifier.recordInfo(), timeStamp)
 
   togglePlay: ->
     if @playing
@@ -53,7 +58,7 @@ class UI.Modifiers.Recordable
       while @playbackIndexCount < dataArray.length && dataArray[@playbackIndexCount].time < timeStamp
         #[{method: 'move', arguments: {x: @x(), y: @y()}}]
         _.each dataArray[@playbackIndexCount].data, (obj)=>
-          @view[obj.method](obj.arguments)
+          @view[obj.method].apply(@view, obj.arguments)
         @playbackIndexCount += 1
 
 

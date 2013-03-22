@@ -20,7 +20,7 @@ class UI.Modifiers.Positionable
 
   # api for interacting with the recordable modifier
   recordInfo: ->
-    [{method: 'move', arguments: {x: @x(), y: @y()}}]
+    [{method: 'move', arguments: [{x: @x(), y: @y()}]}]
 
   defineMethodsOnView: ->
     @view.move = @move

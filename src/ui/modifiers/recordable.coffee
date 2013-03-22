@@ -4,7 +4,7 @@
 class UI.Modifiers.Recordable
   constructor: (view)->
     _.bindAll @, 'record', 'startRecording', 'stopRecording', 'togglePlay', 
-                 'handleTick','handleTimerReset'
+                 'handleTick','handleTimerReset', 'viewIsSelected', 'clearDataAtTime'
     UI.on('Timer:Start', @startRecording)
     UI.on('Timer:Stop', @stopRecording)
     UI.on('Timer:Tick', @handleTick)
@@ -18,7 +18,8 @@ class UI.Modifiers.Recordable
     @playing = false
     @playbackIndexCount = 0
 
-  startRecording: (timer)->  
+  startRecording: (timer)->
+    @firstTickRecorded = false
     @recording = true
 
   handleTimerReset: (timer)->
@@ -35,12 +36,19 @@ class UI.Modifiers.Recordable
     else if @recording
       @record(timer.getTime())
 
+  viewIsSelected: ->
+    @view.isSelected && @view.isSelected()
+
   record: (timeStamp)->
     # This knows too much about the view if it's looking for an isSelected method..
     # Need a better way of detecting selected state
 
     # don't record anything unless the object is selected
-    if @view.isSelected && @view.isSelected()
+    if @viewIsSelected()
+      if !@firstTickRecorded && @viewIsSelected()
+        @clearDataAtTime(timeStamp)
+        @firstTickRecorded = true
+
       _.each @view.recordableModifiers, (modifierObject)=>
         @recordingData.push(modifierObject.name, modifierObject.modifier.recordInfo(), timeStamp)
 
@@ -50,7 +58,18 @@ class UI.Modifiers.Recordable
     else
       @playing = true
 
-  # play back the record based on the time stamp, this should catch up to a timestamp
+  clearDataAtTime: (timeStamp)->
+    playData = @recordingData.recordingData
+    _.each playData, (dataArray, modifierName)=>
+      dataIndex = @recordingData.playDataIndex()[modifierName][timeStamp]
+
+      # the original dataArray could be saved here for a sort of undo functionality
+      # probably the entire recording data should be saved, I'm not sure.
+      # TODO implement Undo for recorded data
+      if dataIndex
+        @recordingData.recordingData[modifierName] = dataArray.slice(0, dataIndex)
+
+  # play back the record based on the time stamp, this should catch up to a timeStamp
   # if the object was paused or falls before. It could probably still be better, but at
   # least we're starting at the last count instead of from the beginning everytime.
   playBackRecording: (timeStamp, options={})->
@@ -66,12 +85,19 @@ class UI.Modifiers.Recordable
 class UI.Modifiers.Recordable.RecordableData
   constructor: ->
     @recordingData = {}
+    @recordingDataIndex = {}
 
   push: (recordingEvent, data, timeStamp)->
     @recordingData[recordingEvent] ||= []
     @recordingData[recordingEvent].push({time: timeStamp, data: data})
 
+    @recordingDataIndex[recordingEvent] ||= {}
+    @recordingDataIndex[recordingEvent][timeStamp] = @recordingData[recordingEvent].length - 1
+
   playData: ->
     @recordingData
+
+  playDataIndex: ->
+    @recordingDataIndex
 
 

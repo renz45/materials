@@ -5,6 +5,7 @@ UI.Views.Shape = UI.Views.BaseResource.extend
     'Positionable'
     'Draggable'
     'Recordable'
+    'Selectable'
   ]
 
   initialize: (options = {})->
@@ -20,5 +21,4 @@ UI.Views.Shape = UI.Views.BaseResource.extend
     @el
 
   setDefaultStyles: ->
-    @$el.css
-      'border': '1px solid #faa'
+    # any default styles can go here

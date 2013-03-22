@@ -2,6 +2,7 @@
 require './modifiers/dragable'
 require './modifiers/positionable'
 require './modifiers/recordable'
+require './modifiers/selectable'
 require './modifiers/timer'
 
 # Models

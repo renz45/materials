@@ -22,7 +22,6 @@ class UI.Modifiers.Draggable
       console.log("The draggable modifer requires that the view has a move() method. Add the positionable modifier or define the move() method")
 
   startDrag: (evt)->
-    evt?.stopPropagation()
     @mouseStartX = evt.clientX
     @mouseStartY = evt.clientY
     @viewStartX = @mouseStartX - evt.offsetX
